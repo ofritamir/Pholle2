@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Pholle</string>
+
+    <string-array name="category">
+        <item></item>
+        <item> Clothes </item>
+        <item> Food </item>
+        <item> Electronics </item>
+        <item> Other </item>
+    </string-array>
+    <string name="title_activity_test">TestActivity</string>
+
+
+</resources>

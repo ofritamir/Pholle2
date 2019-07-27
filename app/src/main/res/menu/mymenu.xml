@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/homeItem" android:title="Home"></item>
+    <item android:id="@+id/addItem" android:title="Add"></item>
+    <item android:id="@+id/searchItem" android:title="Search"></item>
+    <item android:id="@+id/receiptItem" android:title="Receipt"></item>
+    <item android:id="@+id/warrantyItem" android:title="Warranty"></item>
+</menu>
