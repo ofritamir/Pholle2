@@ -23,8 +23,20 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import static com.example.ofri.pholle.Search.test;
 
 public class MainPageActivity extends AppCompatActivity {
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     private ImageButton logOutBtn;
     private Spinner spinnerDropDown;
@@ -33,6 +45,8 @@ public class MainPageActivity extends AppCompatActivity {
     private TextView welcomeText;
     private Button buttonTest;
     CardView amitBtn;
+    CardView receiptBtn;
+    CardView warrantyBtn;
 
             public void adding(View view) {
         Intent intent = new Intent(this, AddActivity.class);
@@ -70,6 +84,8 @@ public class MainPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Receipt");
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -87,6 +103,82 @@ public class MainPageActivity extends AppCompatActivity {
                 startActivity(new Intent(MainPageActivity.this,Search.class));
             }
         });
+
+        receiptBtn = findViewById(R.id.receipt);
+        receiptBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                test = new ArrayList<>();
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot ds : dataSnapshot.child(mAuth.getUid()).getChildren()) {
+                            WarrantyObj w = new WarrantyObj();
+
+
+                            w.setType(ds.child("type").getValue().toString());
+                            if(w.getType().equals("Receipt")) {
+                                w.setReceiptID(ds.child("receiptID").getValue().toString());
+                                w.setCategory(ds.child("category").getValue().toString());
+                                w.setStartDate(ds.child("startDate").getValue().toString());
+                                w.setStoreName(ds.child("storeName").getValue().toString());
+                                w.setEndDate(ds.child("endDate").getValue().toString());
+                                test.add(w);
+                            }
+                            else {
+                                continue;
+                            }
+                        }
+
+                    }                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Intent intent = new Intent(MainPageActivity.this,SearchList.class);
+                intent.putExtra("type", "Receipt");
+                startActivity(intent);
+            }
+        });
+
+        warrantyBtn = findViewById(R.id.warranty);
+        warrantyBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                test = new ArrayList<>();
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot ds : dataSnapshot.child(mAuth.getUid()).getChildren()) {
+                            WarrantyObj w = new WarrantyObj();
+                            w.setType(ds.child("type").getValue().toString());
+                            if(w.getType().equals("Warranty")) {
+                                w.setReceiptID(ds.child("receiptID").getValue().toString());
+                                w.setCategory(ds.child("category").getValue().toString());
+                                w.setStartDate(ds.child("startDate").getValue().toString());
+                                w.setStoreName(ds.child("storeName").getValue().toString());
+                                w.setEndDate(ds.child("endDate").getValue().toString());
+                                test.add(w);
+                            }
+                            else{
+                                continue;
+                            }
+
+
+                        }
+
+                    }                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Intent intent = new Intent(MainPageActivity.this,SearchList.class);
+                intent.putExtra("type", "Warranty");
+                startActivity(intent);
+            }
+        });
+
+
 
         welcomeText = (TextView) findViewById(R.id.welcomeTextView);
         FirebaseUser user = mAuth.getCurrentUser();
@@ -120,8 +212,74 @@ public class MainPageActivity extends AppCompatActivity {
             case R.id.searchItem:
                 startActivity(new Intent(MainPageActivity.this, Search.class));
                 break;
-        }
+            case R.id.warrantyItem:
+                test = new ArrayList<>();
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        for (DataSnapshot ds : dataSnapshot.child(mAuth.getUid()).getChildren()) {
+                            WarrantyObj w = new WarrantyObj();
+                            w.setType(ds.child("type").getValue().toString());
+                            if(w.getType().equals("Warranty")) {
+                                w.setReceiptID(ds.child("receiptID").getValue().toString());
+                                w.setCategory(ds.child("category").getValue().toString());
+                                w.setStartDate(ds.child("startDate").getValue().toString());
+                                w.setStoreName(ds.child("storeName").getValue().toString());
+                                w.setEndDate(ds.child("endDate").getValue().toString());
+                                test.add(w);
+                            }
+                            else{
+                                continue;
+                            }
+
+
+                        }
+
+                    }                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Intent intent = new Intent(MainPageActivity.this,SearchList.class);
+                intent.putExtra("type", "Warranty");
+                startActivity(intent);
+                break;
+
+            case R.id.receiptItem:
+                test = new ArrayList<>();
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot ds : dataSnapshot.child(mAuth.getUid()).getChildren()) {
+                            WarrantyObj w = new WarrantyObj();
+
+
+                            w.setType(ds.child("type").getValue().toString());
+                            if(w.getType().equals("Receipt")) {
+                                w.setReceiptID(ds.child("receiptID").getValue().toString());
+                                w.setCategory(ds.child("category").getValue().toString());
+                                w.setStartDate(ds.child("startDate").getValue().toString());
+                                w.setStoreName(ds.child("storeName").getValue().toString());
+                                w.setEndDate(ds.child("endDate").getValue().toString());
+                                test.add(w);
+                            }
+                            else {
+                                continue;
+                            }
+                        }
+
+                    }                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Intent intent2 = new Intent(MainPageActivity.this,SearchList.class);
+                intent2.putExtra("type", "Receipt");
+                startActivity(intent2);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

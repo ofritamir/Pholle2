@@ -23,7 +23,7 @@
         android:textSize="55sp" />
 
     <EditText
-        android:id="@+id/storeName"
+        android:id="@+id/email_input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/pholleHead"
@@ -42,22 +42,22 @@
         android:textCursorDrawable="@null"
         android:textSize="20sp"
         android:inputType="textEmailAddress" />
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_below="@+id/storeName"
+        android:layout_below="@+id/email_input"
         android:background="#cccccc"
         >
-</View>
+    </View>
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/storeName"
+        android:layout_below="@+id/email_input"
         android:inputType="textPassword"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -87,7 +87,6 @@
         android:textSize="20sp"
         android:textStyle="normal|bold" />
 
-
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
@@ -102,6 +101,31 @@
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="normal|bold" />
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="61dp"
+        android:layout_below="@id/loginBtn"
+        android:text="why to carry a wallet?!"
+        android:textAlignment="center"
+
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/noteBelow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_below="@id/button2"
+        android:text="It Take Less Then 1 Minute"
+        android:textAlignment="center"
+
+        android:textSize="10sp" />
 
 
 

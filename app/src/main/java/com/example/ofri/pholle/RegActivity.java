@@ -44,7 +44,6 @@ public class RegActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
 
-    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
     SignInButton signInButton;
 
 
@@ -52,8 +51,8 @@ public class RegActivity extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(RegActivity.this, "Fields are empty", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || email.equals(null) || password.equals(null)) {
+            Toast.makeText(RegActivity.this, "Fields are Incorrect!", Toast.LENGTH_LONG).show();
         } else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -82,8 +81,6 @@ public class RegActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.password_input);
         regBtn = findViewById(R.id.regBtn);
 
-        signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setSize(signInButton.SIZE_STANDARD);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -103,39 +100,6 @@ public class RegActivity extends AppCompatActivity {
             }
         });
 
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivity(signInIntent);
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent);
-                try {
-                    String email = task.getResult().getEmail();
-                    String userName = task.getResult().getDisplayName();
-                    String pass = task.getResult().getId();
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    firebaseAuthWithGoogle(account);
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-
-                Log.v("UserCreat", "success");
-            }
-        });
     }
 }
