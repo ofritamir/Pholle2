@@ -52,6 +52,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,9 +91,13 @@ public class AddActivity extends FragmentActivity {
         String category = spinner.getSelectedItem().toString();
 
         if (TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate) ||
-                TextUtils.isEmpty(prouctName) || TextUtils.isEmpty(category)) {
+                TextUtils.isEmpty(prouctName) || type.equals("")) {
             Toast.makeText(this, "Empty!", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if (!checkDate(startDate,endDate)) {
+            Toast.makeText(this, "Incorrect End Date!", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
             try {
                 String id = databaseReference.push().getKey();
@@ -133,7 +139,6 @@ public class AddActivity extends FragmentActivity {
         receiptRadio.setOnClickListener(v -> type="Receipt");
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Receipt");
-
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,6 +364,21 @@ public class AddActivity extends FragmentActivity {
                 }
             }
         }
+    }
+
+    private boolean checkDate(String start, String end){
+        boolean isExpired=false;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            Date startDate = formatter.parse(start);
+            Date endDate = formatter.parse(end);
+            if (endDate.after(startDate)) isExpired=true;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return isExpired;
     }
 
 }
