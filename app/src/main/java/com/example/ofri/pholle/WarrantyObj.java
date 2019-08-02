@@ -6,11 +6,6 @@ import java.io.File;
 
 public class WarrantyObj {
 
-   // String name;
-   // String category;
-   // int date;
-
-    ///////////////////////////////////////////////////////////////
 
     String receiptID;
     String startDate;

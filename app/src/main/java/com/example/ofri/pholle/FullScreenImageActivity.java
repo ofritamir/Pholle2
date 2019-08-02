@@ -16,14 +16,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 
 public class FullScreenImageActivity extends AppCompatActivity {
-
     ImageView fullScreen;
-
- //   FirebaseDatabase database;
- //   DatabaseReference myRef;
- //   FirebaseAuth mAuth;
     File file2;
-//    StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

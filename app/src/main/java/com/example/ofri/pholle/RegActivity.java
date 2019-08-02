@@ -67,16 +67,6 @@ public class RegActivity extends AppCompatActivity {
         }
     }
 
-
-    // get current date
- /*   public void setDate(){
-        Date today = Calendar.getInstance().getTime();//getting date
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");//formating according to my need
-        String date = formatter.format(today);
-        time.setText(date); // time = the name of the TextField
-    } */
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -88,9 +78,9 @@ public class RegActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        emailInput = (TextView) findViewById(R.id.email_input);
-        passwordInput = (TextView) findViewById(R.id.password_input);
-        regBtn = (Button) findViewById(R.id.regBtn);
+        emailInput = findViewById(R.id.email_input);
+        passwordInput = findViewById(R.id.password_input);
+        regBtn = findViewById(R.id.regBtn);
 
         signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(signInButton.SIZE_STANDARD);

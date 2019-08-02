@@ -32,33 +32,7 @@ public class MainPageActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private TextView welcomeText;
     private Button buttonTest;
-
     CardView amitBtn;
-
-   /* public void fillMenu(){
-        String[] menu = new String[] {"", "Home", "Receipt", "Warranty", "Add New"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, menu);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDropDown.setAdapter(adapter);
-        spinnerDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if (parent.getItemAtPosition(position).equals("Add New")) {
-                    startActivity(new Intent(MainPageActivity.this, AddActivity.class));
-                } else if (parent.getItemAtPosition(position).equals("Receipt")) {
-                    startActivity(new Intent(MainPageActivity.this, Search.class));
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }*/
-
-
 
             public void adding(View view) {
         Intent intent = new Intent(this, AddActivity.class);
@@ -71,9 +45,6 @@ public class MainPageActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             System.exit(0);
-
-         //   super.onBackPressed();
-         //   return;
         }
 
         this.doubleBackToExitPressedOnce = true;
@@ -88,29 +59,11 @@ public class MainPageActivity extends AppCompatActivity {
         }, 2000);
     }
 
-
-
-
- /*   public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
-            // do something on back.
-            System.exit(0);
-
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    } */
-
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,31 +88,11 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-
-      /* buttonTest = findViewById(R.id.buttonTest);
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainPageActivity.this, ShowActivity.class));
-            }
-        });*/
-
-
-
-
-       // spinnerDropDown = (Spinner) findViewById(R.id.spinnerMenu);
-       // fillMenu();
-
-
-
         welcomeText = (TextView) findViewById(R.id.welcomeTextView);
         FirebaseUser user = mAuth.getCurrentUser();
         int num = user.getEmail().indexOf("@");
         String name = user.getEmail().substring(0,num);
         welcomeText.setText("Welcome "+name);
-
-
-
 
         logOutBtn = (ImageButton) findViewById(R.id.logOut);
 
@@ -188,7 +121,6 @@ public class MainPageActivity extends AppCompatActivity {
                 startActivity(new Intent(MainPageActivity.this, Search.class));
                 break;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

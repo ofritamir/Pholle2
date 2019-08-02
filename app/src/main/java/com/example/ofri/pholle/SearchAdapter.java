@@ -56,10 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.MyViewHolder myViewHolder, int i) {
         WarrantyObj w= dataList.get(i);
-
         myViewHolder.setData(w);
-
-
     }
 
     @Override

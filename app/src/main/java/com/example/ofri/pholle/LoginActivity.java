@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
 
             System.exit(0);
-            //   super.onBackPressed();
-            //   return;
         }
 
         this.doubleBackToExitPressedOnce = true;
@@ -54,9 +52,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }, 2000);
     }
-
-
-
 
     public void reg(View view) {
         Intent intent = new Intent(this, RegActivity.class);
@@ -95,10 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         mAuth = FirebaseAuth.getInstance();
-        emailInput = (EditText) findViewById(R.id.storeName);
-        passwordInput = (EditText) findViewById(R.id.editText2);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
-        regBtn = (Button) findViewById(R.id.button2);
+        emailInput = findViewById(R.id.storeName);
+        passwordInput = findViewById(R.id.editText2);
+        loginBtn = findViewById(R.id.loginBtn);
+        regBtn = findViewById(R.id.button2);
         intent = new Intent(this, MainPageActivity.class);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -123,8 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this,RegActivity.class));
             }
         });
-
-
 
     }
 }

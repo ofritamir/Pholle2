@@ -31,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +77,9 @@ public class AddActivity extends FragmentActivity {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
+    RadioButton receiptRadio;
+    RadioButton warrantyRadio;
+    String type = "";
 
 
     public void addReceipt() {
@@ -83,7 +87,6 @@ public class AddActivity extends FragmentActivity {
         String endDate = EndDateEdit.getText().toString();
         String prouctName = storeName.getText().toString();
         String category = spinner.getSelectedItem().toString();
-
 
         if (TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate) ||
                 TextUtils.isEmpty(prouctName) || TextUtils.isEmpty(category)) {
@@ -93,8 +96,8 @@ public class AddActivity extends FragmentActivity {
             try {
                 String id = databaseReference.push().getKey();
                 String id2 = firebaseAuth.getUid();
-                Receipt receipt = new Receipt(id, startDate, endDate, prouctName, category);
-                firebaseDatabase.getReference().child("Receipt").child(id2).child(id).setValue(receipt);
+                WarrantyObj obj = new WarrantyObj(id, startDate, endDate, prouctName, category, type);
+                firebaseDatabase.getReference().child("Receipt").child(id2).child(id).setValue(obj);
                 StorageReference pictureRef = mStorageRef.child(id);
                 pictureRef.putFile(testFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -102,37 +105,14 @@ public class AddActivity extends FragmentActivity {
 
                     }
                 });
-                Toast.makeText(this, "Receipt added successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(AddActivity.this, MainPageActivity.class));
 
-                //  StartDateEdit.setText("");
-                //  EndDateEdit.setText("");
-                //  Name.setText("");
-                // spinner.setSelection(0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Toast.makeText(this, "Receipt added successfully", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AddActivity.this, MainPageActivity.class));
         }
     }
-
-    // show the current date on start! show worng month!
- /*   public String currentDate(){
-        String day = "";
-        String month = "";
-        String year = "";
-        String date = "";
-        Calendar calendar = Calendar.getInstance();
-        int day1 = calendar.get(Calendar.DAY_OF_MONTH);
-        int mon = calendar.get(Calendar.MONTH);
-
-        day = Integer.toString(day1);
-        month = Integer.toString(mon);
-
-        year = Integer.toString(calendar.get(Calendar.YEAR));
-        date = day+"/"+month+"/"+year;
-        return date;
-
-    } */
 
 
     @Override
@@ -146,10 +126,11 @@ public class AddActivity extends FragmentActivity {
         addBtn = findViewById(R.id.addButton);
         databaseReference = FirebaseDatabase.getInstance().getReference("receipt");
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance(); // testing
-        // spouse to show the current date. problem with month!
-        //   StartDateEdit = (EditText) findViewById(R.id.startDate);
-        //StartDateEdit.setText(currentDate());
+        firebaseAuth = FirebaseAuth.getInstance();
+        receiptRadio = findViewById(R.id.receiptRadioButton);
+        warrantyRadio = findViewById(R.id.warrantyRadioButton);
+        warrantyRadio.setOnClickListener(v -> type="Warranty");
+        receiptRadio.setOnClickListener(v -> type="Receipt");
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Receipt");
 

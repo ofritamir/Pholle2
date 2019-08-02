@@ -67,51 +67,25 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         editTextDate = findViewById(R.id.textViewDate);
-        btnSearch = (Button) findViewById(R.id.SearchWarrantyButton);
+        btnSearch = findViewById(R.id.SearchWarrantyButton);
 
-        storeName = (EditText) findViewById(R.id.storeName); 
-        category=(Spinner) findViewById(R.id.spinner);
+        storeName = findViewById(R.id.storeName);
+        category= findViewById(R.id.spinner);
         adpter = ArrayAdapter.createFromResource(this,R.array.category,android.R.layout.simple_spinner_item);
         adpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adpter);
 
-
-
-
-
-        calendar = (ImageButton) findViewById(R.id. calendar);
+        calendar = findViewById(R.id. calendar);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTruitonDatePickerDialog(v);
             }
         });
-        checkBoxExpire = (CheckBox) findViewById(R.id.expired);
-        checkBoxValid = (CheckBox) findViewById(R.id.valid);
-        checkBoxRec = (CheckBox) findViewById(R.id.receipt);
-        checkBoxWarr = (CheckBox) findViewById(R.id.warranty);
-
-       // checkBoxExpire.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-           // public void onClick(View v) {
-             //   if(checkBoxExpire.isChecked())
-               // {
-                 //   checkBoxValid.setChecked(false);
-               // }
-            //}
-        //});
-
-        //checkBoxValid.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View v) {
-              //  if(checkBoxValid.isChecked())
-                //{
-                  //  checkBoxExpire.setChecked(false);
-                //}
-            //}
-        //});
-
-        ///////////////////////////////////////////////////////
+        checkBoxExpire = findViewById(R.id.expired);
+        checkBoxValid = findViewById(R.id.valid);
+        checkBoxRec = findViewById(R.id.receipt);
+        checkBoxWarr = findViewById(R.id.warranty);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Receipt");
@@ -132,8 +106,9 @@ public class Search extends AppCompatActivity {
                             w.setReceiptID(ds.child("receiptID").getValue().toString());
                             w.setCategory(ds.child("category").getValue().toString());
                             w.setStartDate(ds.child("startDate").getValue().toString());
-                            w.setStoreName(ds.child("productName").getValue().toString());
+                            w.setStoreName(ds.child("storeName").getValue().toString());
                             w.setEndDate(ds.child("endDate").getValue().toString());
+                            w.setType(ds.child("type").getValue().toString());
 
 
                             if(category.getSelectedItem().toString().equals("")&&editTextDate.getText().toString().equals("")
@@ -144,13 +119,10 @@ public class Search extends AppCompatActivity {
 
                            else if(w.getCategory().equals(category.getSelectedItem().toString())||category.getSelectedItem().toString().equals(""))
                             {
-                                //w.setStartDate(ds.child("startDate").getValue().toString());
                                 if(isPackageExpired(editTextDate.getText().toString(),w.getStartDate())||editTextDate.getText().toString().equals(""))
                                 {
-                                   // w.setProductName(ds.child("productName").getValue().toString());
                                     if(w.getStoreName().equals(storeName.getText().toString())||storeName.getText().toString().equals(""))
                                     {
-                                       // w.setEndDate(ds.child("endDate").getValue().toString());
                                         if(checkBoxValid.isChecked()&&checkBoxExpire.isChecked())
                                         {
                                             test.add(w);
@@ -190,10 +162,6 @@ public class Search extends AppCompatActivity {
                 startActivity(new Intent(Search.this,SearchList.class));
 
             }
-
-            //////////////////////////////////////////////////////
-
-
         });
     }
 
@@ -213,15 +181,6 @@ public class Search extends AppCompatActivity {
             e.printStackTrace();
         }
         return isExpired;
-
-        ////////////////////////////////////////////////////
-
-       // boolean isExpired=false;
-        //Date today = new Date();
-       // Date expiredDate = stringToDate(date, "dd/mm/yyyy");
-       // if (today.after(expiredDate)) isExpired=true;
-
-       // return isExpired;
     }
     private boolean isPackageExpired(String date,String checkdate){
         boolean isExpired=false;

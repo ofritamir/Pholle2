@@ -73,22 +73,13 @@ public class ShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-        ///////////////////////////////
-    //    testTextView2 = findViewById(R.id.testerTextView);
         getText = findViewById(R.id.getTextButton);
-
-        //////////////////////////////
-
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Receipt");
         textView = findViewById(R.id.textView);
         mStorageRef = FirebaseStorage.getInstance().getReference("Receipt");
         imageView = findViewById(R.id.imageView2);
-
-
-
-
 
         readDataFromDatabase();
 
@@ -101,8 +92,6 @@ public class ShowActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     public void readDataFromDatabase(){
@@ -144,7 +133,6 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
     }
-    ////////////////////////
 
     private TextView testTextView2;
     Button getText;
@@ -196,7 +184,6 @@ public class ShowActivity extends AppCompatActivity {
                     Log.v("Date test", "Didnt work");
                 }
             }
-
 
             textView.setText(sb.toString());
             Log.v("text", textView.getText().toString());

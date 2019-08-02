@@ -14,7 +14,6 @@ public class Receipt {
     String productName;
     String category;
 
-
     public Receipt(){}
 
     public Receipt(String receiptID, String startDate, String endDate, String productName, String category) {
